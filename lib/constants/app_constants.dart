@@ -1,0 +1,3 @@
+enum  DependencyNames{
+  memory,firebase
+}
