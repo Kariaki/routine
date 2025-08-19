@@ -8,12 +8,11 @@ import 'package:routine/app/note/presentation/cubit/note_cubit.dart';
 import 'package:routine/app/note/data/dto/note_dto.dart';
 import 'package:routine/core/extensions/context_extension.dart';
 import 'package:routine/core/extensions/num_extension.dart';
-
-import '../../../../core/asset/app_assets.dart';
-import '../../../../core/util/cubit_state.dart';
-import '../../../../src/theme/app_colors.dart';
-import '../../../../src/widgets/base_scaffold.dart';
-import '../../../auth/data/dto/user_dto.dart';
+import 'package:routine/core/asset/app_assets.dart';
+import 'package:routine/core/util/cubit_state.dart';
+import 'package:routine/src/theme/app_colors.dart';
+import 'package:routine/src/widgets/base_scaffold.dart';
+import 'package:routine/app/auth/data/dto/user_dto.dart';
 
 class NoteListScreen extends StatefulWidget {
   const NoteListScreen({super.key});
@@ -72,7 +71,7 @@ class _NoteListScreenState extends State<NoteListScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                firstName,
+                                '${_getGreeting()} $firstName',
                                 style: context.textTheme.titleLarge,
                               ),
                               10.height,
@@ -116,5 +115,18 @@ class _NoteListScreenState extends State<NoteListScreen> {
         },
       ),
     );
+  }
+  String _getGreeting() {
+    // Get the current hour of the day (0-23)
+    int currentHour =  DateTime.now().hour;
+
+    // Define the time ranges for different greetings
+    if (currentHour >= 5 && currentHour < 12) {
+      return "Good morning";
+    } else if (currentHour >= 12 && currentHour < 17) {
+      return "Good afternoon";
+    } else {
+      return "Good evening";
+    }
   }
 }

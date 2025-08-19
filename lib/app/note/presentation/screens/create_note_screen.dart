@@ -1,16 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:routine/app/note/data/dto/note_dto.dart';
 import 'package:routine/core/extensions/context_extension.dart';
+import 'package:routine/core/extensions/list_extension.dart';
 import 'package:routine/core/extensions/num_extension.dart';
 import 'package:routine/app/note/presentation/cubit/note_cubit.dart';
-import '../../../../core/asset/app_assets.dart';
-import '../../../../src/theme/app_colors.dart';
-import '../../../../src/widgets/base_scaffold.dart';
-import '../../../../src/widgets/default_text_input_field.dart';
+import 'package:routine/core/asset/app_assets.dart';
+import 'package:routine/src/theme/app_colors.dart';
+import 'package:routine/src/widgets/base_scaffold.dart';
+import 'package:routine/src/widgets/default_text_input_field.dart';
 
 class CreateNoteScreen extends StatefulWidget {
   const CreateNoteScreen({super.key, this.note});
@@ -46,8 +46,6 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
       onPopInvokedWithResult: (_, result) {
         if (_controller?.text.isNotEmpty ?? false) {
           context.read<NoteCubit>().saveNote(_note);
-        } else {
-          Fluttertoast.showToast(msg: 'Please enter a title');
         }
       },
       child: BaseScaffold.withAppBar(
@@ -89,8 +87,10 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
               child: ListView(
                 shrinkWrap: true,
                 children: [
-                  ...List.generate(_tasks.length, (index) {
-                    final item = _tasks[index];
+                  ..._tasks.mapWithIndex((item, index) {
+                    if (item.completed) {
+                      return SizedBox();
+                    }
                     return TaskItemComponent(
                       initialText: item.title,
                       initialValue: item.completed,
@@ -138,6 +138,37 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
                       ),
                     ],
                   ),
+                  20.height,
+                  ...List.generate(_tasks.length, (index) {
+                    final item = _tasks[index];
+                    if (!item.completed) {
+                      return SizedBox();
+                    }
+                    return TaskItemComponent(
+                      initialText: item.title,
+                      initialValue: item.completed,
+                      onCancel: () {
+                        setState(() {
+                          _tasks.removeAt(index);
+                          _note = _note.copyWith(tasks: _tasks);
+                        });
+                      },
+                      onSubmit: (value) {
+                        setState(() {
+                          _tasks[index] = _tasks[index].copyWith(title: value);
+                          _note = _note.copyWith(tasks: _tasks);
+                        });
+                      },
+                      onCheckChange: (value) {
+                        setState(() {
+                          _tasks[index] = _tasks[index].copyWith(
+                            completed: value,
+                          );
+                          _note = _note.copyWith(tasks: _tasks);
+                        });
+                      },
+                    );
+                  }),
                 ],
               ),
             ),
@@ -189,6 +220,11 @@ class _TaskItemComponentState extends State<TaskItemComponent> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        SvgPicture.asset(
+          AppAsset.rearrange,
+          color: context.isDarkMode ? AppColors.greyC8 : AppColors.grey55,
+        ),
+        10.width,
         Checkbox(
           value: value,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),

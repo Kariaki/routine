@@ -13,7 +13,10 @@ class NoteItemComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pendingTask = note.tasks.where((e) => !e.completed).toList();
+    List<TaskDto> pendingTask = note.tasks.where((e) => !e.completed).toList();
+    if(pendingTask.length>3){
+      pendingTask=pendingTask.sublist(0,3);
+    }
     var tickedItemsCount = note.tasks.length - pendingTask.length;
     var taskTextStyle = context.textTheme.bodyMedium?.copyWith(
       fontWeight: FontWeight.w500,
@@ -36,7 +39,7 @@ class NoteItemComponent extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(note.title, style: context.textTheme.titleMedium),
+            Text(note.title, style: context.textTheme.titleMedium,maxLines: 3,),
             10.height,
             ...pendingTask.map(
                   (task) => Padding(padding: EdgeInsets.symmetric(vertical: 5),

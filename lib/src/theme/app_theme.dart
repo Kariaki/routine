@@ -13,11 +13,7 @@ abstract class AppTheme {
     appBarTheme: const AppBarTheme(
       elevation: 0,
       color: Colors.transparent,
-      titleTextStyle: TextStyle(
-        color: Colors.black,
-        fontSize: 20,
-        fontWeight: FontWeight.w700,
-      ),
+      surfaceTintColor: Colors.transparent,
       iconTheme: IconThemeData(size: 20, color: Colors.black),
     ),
     primaryColor: AppColors.buttonPrimary,
@@ -47,11 +43,7 @@ abstract class AppTheme {
     appBarTheme: const AppBarTheme(
       elevation: 0,
       color: Colors.transparent,
-      titleTextStyle: TextStyle(
-        color: Colors.black,
-        fontSize: 20,
-        fontWeight: FontWeight.w700,
-      ),
+      surfaceTintColor: Colors.transparent,
       iconTheme: IconThemeData(size: 20, color: Colors.black),
     ),
     primaryColor: AppColors.buttonPrimary,

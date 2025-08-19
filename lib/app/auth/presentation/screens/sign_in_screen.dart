@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +7,7 @@ import 'package:routine/app/auth/presentation/screens/register_screen.dart';
 import 'package:routine/app/root/app_root.dart';
 import 'package:routine/core/extensions/context_extension.dart';
 import 'package:routine/core/extensions/num_extension.dart';
+import 'package:routine/src/theme/app_colors.dart';
 
 import '../../../../core/util/cubit_state.dart';
 import '../../../../src/widgets/app_button.dart';
@@ -109,7 +108,8 @@ class _SignInScreenState extends State<SignInScreen> {
                   );
                 }
                 if (state.isSuccess) {
-                  // context.pushRemoveUntil(AppRootScreen());
+                  Fluttertoast.showToast(msg: 'Sign in success',backgroundColor: AppColors.greenDark);
+                   context.pushRemoveUntil(AppRootScreen());
                 }
               },
             ),

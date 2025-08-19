@@ -9,4 +9,5 @@ abstract class AppAsset {
   static String bin = 'bin'.svg;
   static String facebook = 'facebook'.svg;
   static String google = 'google'.svg;
+  static String rearrange = 'rearrange'.svg;
 }

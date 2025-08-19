@@ -17,6 +17,7 @@ class ApiResultWrapper {
       return Failure(error: e.message, code: e.statusCode);
     }
     on FirebaseAuthException catch (authError, trace) {
+      print(authError.code);
       final message = _mapAuthError(authError.code, authError.message);
       return Failure(error: message, code: _mapAuthCode(authError.code));
     } on FirebaseException catch (fbError, trace) {
@@ -39,6 +40,8 @@ class ApiResultWrapper {
         return "No user found with this email.";
       case 'wrong-password':
         return "Incorrect password. Please try again.";
+      case 'invalid-credential':
+        return "Incorrect credential.";
       case 'email-already-in-use':
         return "The email is already in use.";
       case 'weak-password':
