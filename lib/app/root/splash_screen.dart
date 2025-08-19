@@ -24,10 +24,7 @@ class _AppSplashScreenState extends State<AppSplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [Text('Welcome to my app')],
-      ),
+      body: Container(),
     );
   }
 
@@ -35,7 +32,7 @@ class _AppSplashScreenState extends State<AppSplashScreen> {
     final isLoggedIn = await getIt<SecureStorageService>().isLoggedIn();
 
     Future.delayed(const Duration(seconds: 3), () {
-      context.pushRemoveUntil(!isLoggedIn ? const AppRootScreen() : LandingPage());
+      context.pushRemoveUntil(isLoggedIn ? const AppRootScreen() : LandingPage());
     });
   }
 }

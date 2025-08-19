@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:routine/app/auth/presentation/cubit/auth_cubit.dart';
+import 'package:routine/app/auth/presentation/screens/sign_in_screen.dart';
 import 'package:routine/core/extensions/context_extension.dart';
 import 'package:routine/core/extensions/num_extension.dart';
 import '../../../core/util/cubit_state.dart';
@@ -71,7 +72,8 @@ class ProfileScreen extends StatelessWidget {
           20.height,
           GestureDetector(
             onTap: () {
-              //handle logout
+              context.read<AuthCubit>().logout();
+              context.pushRemoveUntil(SignInScreen());
             },
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:routine/app/auth/presentation/cubit/auth_cubit.dart';
 import 'package:routine/app/note/data/dto/note_dto.dart';
 import 'package:routine/core/extensions/context_extension.dart';
 import 'package:routine/core/extensions/list_extension.dart';
@@ -31,10 +32,13 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
   @override
   void initState() {
     super.initState();
-    _note = widget.note ?? NoteDto();
+    final currentUser = context.read<AuthCubit>().data;
+    _note = widget.note ?? NoteDto(userId: currentUser?.userId ?? '');
     _controller = TextEditingController(text: widget.note?.title);
     _tasks = widget.note?.tasks ?? [];
   }
+
+  bool delete = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +48,9 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
     );
     return PopScope(
       onPopInvokedWithResult: (_, result) {
+        if (delete) {
+          return;
+        }
         if (_controller?.text.isNotEmpty ?? false) {
           context.read<NoteCubit>().saveNote(_note);
         }
@@ -55,6 +62,9 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
           if (widget.note != null)
             IconButton(
               onPressed: () {
+                setState(() {
+                  delete = true;
+                });
                 context.read<NoteCubit>().deleteNoteById(widget.note!.id ?? '');
                 context.pop();
               },

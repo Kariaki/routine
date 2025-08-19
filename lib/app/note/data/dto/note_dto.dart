@@ -4,12 +4,14 @@ class NoteDto {
   final List<TaskDto> tasks;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final String userId;
 
   NoteDto({
     this.title = '',
     this.id,
     this.tasks = const [],
     this.createdAt,
+    required this.userId,
     this.updatedAt,
   });
 
@@ -19,10 +21,12 @@ class NoteDto {
     List<TaskDto>? tasks,
     DateTime? createdAt,
     DateTime? updatedAt,
+    String? userId
   }) {
     return NoteDto(
       title: title ?? this.title,
       id: id ?? this.id,
+      userId: userId??this.userId,
       tasks: tasks ?? this.tasks,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -32,6 +36,7 @@ class NoteDto {
   factory NoteDto.fromJson(Map<dynamic, dynamic> json) {
     return NoteDto(
       title: json['title'] as String,
+      userId: json['userId'],
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['createdAt']),
       id: json['id'] as String,
@@ -45,6 +50,7 @@ class NoteDto {
     return {
       'title': title,
       'id': id,
+      'userId':userId,
       'tasks': tasks.map((task) => task.toJson()).toList(),
       'createdAt': createdAt?.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),

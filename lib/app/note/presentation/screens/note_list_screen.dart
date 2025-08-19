@@ -24,6 +24,8 @@ class NoteListScreen extends StatefulWidget {
 class _NoteListScreenState extends State<NoteListScreen> {
   @override
   void initState() {
+      context.read<NoteCubit>().fetchNotes();
+
     super.initState();
   }
 
@@ -45,7 +47,6 @@ class _NoteListScreenState extends State<NoteListScreen> {
               70.height,
               Container(
                 width: double.infinity,
-                height: 104,
                 padding: EdgeInsets.all(20),
                 decoration: ShapeDecoration(
                   color: context.isDarkMode
@@ -72,6 +73,7 @@ class _NoteListScreenState extends State<NoteListScreen> {
                             children: [
                               Text(
                                 '${_getGreeting()} $firstName',
+                                maxLines: 2,
                                 style: context.textTheme.titleLarge,
                               ),
                               10.height,

@@ -26,10 +26,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i814.SecureStorageService(),
     );
     gh.lazySingleton<_i664.NoteRepository>(
-      () => _i664.InMemoryNoteRepository(),
-      instanceName: 'memory',
-    );
-    gh.lazySingleton<_i664.NoteRepository>(
       () => _i664.FirebaseNoteRepository(),
       instanceName: 'firebase',
     );

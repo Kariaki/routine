@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:routine/app/auth/presentation/cubit/auth_cubit.dart';
 import 'package:routine/app/root/pages/home_page.dart';
 import 'package:routine/app/root/pages/profile_screen.dart';
 import 'package:routine/app/note/presentation/cubit/note_cubit.dart';
@@ -19,8 +20,8 @@ class _AppRootScreenState extends State<AppRootScreen> {
 
   @override
   void initState() {
-    context.read<NoteCubit>().fetchNotes();
     super.initState();
+
   }
 
   @override

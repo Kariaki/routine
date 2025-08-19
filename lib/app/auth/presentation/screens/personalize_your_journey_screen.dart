@@ -17,10 +17,6 @@ class PersonalizeYourJourneyScreen extends StatefulWidget {
 
 class _PersonalizeYourJourneyScreenState
     extends State<PersonalizeYourJourneyScreen> {
-  String? _selectedProductivity;
-  String? _selectedHealthAndFitness;
-  String? _selectedSelfCarAndMindfulness;
-
   String? selected;
 
   @override
@@ -64,13 +60,10 @@ class _PersonalizeYourJourneyScreenState
               );
             },
           ),
-          50.height,
+          30.height,
           AppButton.primary(
             text: 'Done',
-            enable:
-                _selectedSelfCarAndMindfulness != null &&
-                _selectedHealthAndFitness != null &&
-                _selectedProductivity != null,
+            enable:selected!=null,
             onPressed: () {
               context.push(SelectWhatYouWantToTrack());
             },

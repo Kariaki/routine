@@ -44,11 +44,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
               label: 'Full Name',
               hint: 'Enter your name',
               controller: _nameController,
+              validator: (value) {
+                if (value?.isEmpty ?? true) {
+                  return 'Required';
+                }
+                return null;
+              },
             ),
             20.height,
             InputField(
               label: 'Email Address',
               hint: 'Example: johndoe@gmail.com',
+              validator: isValidEmailAddress,
               controller: _emailController,
             ),
             20.height,
@@ -72,6 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               label: 'Re-enter Password',
               hint: '*********',
               maxLines: 1,
+              obscureText: true,
               controller: _confirmPasswordController,
               validator: (value) {
                 if (value?.isEmpty ?? true) {
@@ -89,6 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               builder: (_, state) {
                 return AppButton.primary(
                   text: 'Register',
+                  loading: state.isLoading,
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       final registerEntity = CreateAccountEntity(
@@ -125,5 +134,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+  String? isValidEmailAddress(String? value) {
+    final emailAddressRegex = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+    );
+     if (value?.isEmpty ?? true) {
+      return 'This field is required';
+    } else if (!emailAddressRegex.hasMatch(value!)) {
+      return 'Please enter a valid email';
+    }
+    return null;
   }
 }
