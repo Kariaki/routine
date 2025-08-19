@@ -1,14 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-extension ContextExtension on BuildContext{
-
+extension ContextExtension on BuildContext {
   TextTheme get textTheme => Theme.of(this).textTheme;
 
   TextStyle? get bodyMedium => Theme.of(this).textTheme.bodyMedium;
-  InputDecorationTheme get inputTheme => Theme.of(this).inputDecorationTheme;
-  void popDialog()=>Navigator.pop(this);
 
+  InputDecorationTheme get inputTheme => Theme.of(this).inputDecorationTheme;
+
+  void popDialog() => Navigator.pop(this);
+
+  bool get isDarkMode => Theme.of(this).brightness == Brightness.dark;
 
   dynamic push(Widget route) async {
     final result = await Navigator.push(
@@ -26,17 +28,19 @@ extension ContextExtension on BuildContext{
   // }
 
   void pop({dynamic result}) {
-    Navigator.pop(this,result);
+    Navigator.pop(this, result);
   }
 
   void popBack() {
     Navigator.pop(this);
   }
+
   void pushRemoveUntil(Widget route, {dynamic argument}) {
     Navigator.pushAndRemoveUntil(
-        this,
-        CupertinoPageRoute(builder: (context) => route),
-            (Route<dynamic> route) => false);
+      this,
+      CupertinoPageRoute(builder: (context) => route),
+      (Route<dynamic> route) => false,
+    );
   }
 
   void pushReplace(Widget route) {
@@ -45,5 +49,4 @@ extension ContextExtension on BuildContext{
       CupertinoPageRoute(builder: (context) => route),
     );
   }
-
 }

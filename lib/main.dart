@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:routine/di/injectable.dart';
 import 'package:routine/screens/splash_screen.dart';
+import 'package:routine/theme/app_theme.dart';
 import 'package:routine/util/app_config.dart';
 import 'cubit/auth_cubit.dart';
 
@@ -24,9 +25,9 @@ class MyApp extends StatelessWidget {
       providers: [BlocProvider<AuthCubit>(create: (context) => AuthCubit())],
       child: MaterialApp(
         title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        ),
+        theme: AppTheme.light,
+        darkTheme: AppTheme.dark,
+        themeMode: ThemeMode.system,
         home: AppSplashScreen(),
       ),
     );
